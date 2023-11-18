@@ -39,6 +39,7 @@ services:
     environment:
        <<: *common-variables
        HOST: "http://127.0.0.1:2202"
+       CANCREATEADMIN: "1"
     ports:
       - "2202:80"
 

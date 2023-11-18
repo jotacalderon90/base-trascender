@@ -6,7 +6,6 @@ const recaptcha = require('cl.jotacalderon.cf.framework/lib/recaptcha');
 const mongodb = require('cl.jotacalderon.cf.framework/lib/mongodb');
 const accesscontrol = require('cl.jotacalderon.cf.framework/lib/accesscontrol');
 const request = require('cl.jotacalderon.cf.framework/lib/request');
-const googleapis = require('./lib/googleapis');
 
 const cookie = function(res,cookie){
 	if(process.env.COOKIE_DOMAIN){
@@ -169,66 +168,6 @@ module.exports = {
 					
 					response.renderMessage(req,res,200,'Actualización de contraseña','Se ha actualizado su contraseña correctamente','success');
 				break;
-			}
-		}catch(e){
-			response.renderError(req,res,e);
-		}
-	},
-	
-	//@route('/api/account/googleoauth')
-	//@method(['get'])
-	loginGoogleGetURL: async function(req,res){
-		try{
-			res.json({data: googleapis.getURL()});
-		}catch(e){
-			res.json({data: null, error: e});
-		}
-	},
-	
-	//@route('/api/account/googleoauth/callback')
-	//@method(['get'])
-	loginGoogleExecute: async function(req,res){
-		try{
-			const user = await googleapis.getUserInfo(req.query.code);
-			let row = await mongodb.find("user",{email: user.emails[0].value});
-			if(row.length!=1){
-				row = {};
-				row.email = user.emails[0].value;
-				row.hash = helper.random(10);
-				row.password = helper.toHash(row.hash + user.emails[0].value,row.hash);
-				row.nickname = user.displayName;
-				row.notification = true;
-				row.thumb = user.image.url;
-				row.roles = ["user"];
-				row.created = new Date();
-				row.activate = true
-				row.google = user;
-				await mongodb.insertOne("user",row);
-			}else{
-				let updated = {
-					$set: {
-						//nickname: user.displayName,
-						thumb: user.image.url,
-						google: user
-					}
-				};
-				row = row[0];
-				await mongodb.updateOne("user",row._id,updated);
-			}
-			cookie(res,accesscontrol.encode(row));
-			
-			const redirectTo = helper.getCookie(req,'redirectTo');
-			
-			if(process.env.HOST_PUSH){
-				const headers = {};
-				headers['x-api-key'] = process.env.X_API_KEY;
-				request.post(process.env.HOST_PUSH + '/api/push/admin',{headers: headers},{title: 'Login Google', body: row.email});
-			}
-					
-			if((redirectTo != null && redirectTo != '') || (req.session.redirectTo && req.session.redirectTo!='')){
-				res.redirect(301, redirectTo || req.session.redirectTo);
-			}else{
-				res.redirect("/");
 			}
 		}catch(e){
 			response.renderError(req,res,e);
