@@ -1,0 +1,17 @@
+{
+	"name": "cl.jotacalderon.cf.cms",
+	"description": "sistema de administracion de contenido web",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"start": "node app",
+		"dev": "npx nodemon --legacy-watch app  --ignore frontend"
+	},
+	"dependencies": {
+		"cl.jotacalderon.cf.framework": "0.0.21",
+		"express-fileupload": "1.2.1"
+	},
+	"devDependencies": {		
+		"nodemon": "latest"
+	}
+}

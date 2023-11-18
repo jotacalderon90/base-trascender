@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+	<head>
+	
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		
+		<meta name="keywords" content="{{data:doc.keywords}}" />
+		<meta name="description" content="{{data:doc.description}}" />
+		<meta name="Author" content="{{data:doc.author}}" />		
+		
+		<meta property="og:title" content="{{data:doc.title}}" />
+		<meta property="og:image" content="{{data:doc.img}}" />
+		
+		<title>{{data:doc.title}}</title>
+		
+		<base href="/" />
+		
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
+		
+		<link rel="stylesheet" href="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/font-awesome/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/jquery-ui/themes/base/jquery-ui.min.css" />
+		<link rel="stylesheet" href="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/supersized/supersized.3.2.7.css" />
+		<link rel="stylesheet" href="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/assets/main.css" media="all"/>
+		
+		<!--define:css-->
+		
+	</head>
+	<body>
+		
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/jquery-ui/jquery-ui.min.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/angular/angular.min.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/moment.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/moment-with-locales.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/supersized/supersized.3.2.7.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/trascender/global.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/trascender/background.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/trascender/formulario_contacto.js"></script>
+
+		<script>
+			const HOST_CMS = "{{data:process.env.HOST_CMS}}";
+		</script>
+		
+		<!--define:script-->
+		
+		<div class="loader">
+			<i class="fa fa-spin fa-spinner"></i>
+		</div>
+		
+		<div id="app" data-ng-app="myApp" data-ng-controller="myCtrl as ctrl">
+			<!--define:main-->
+		</div>
+		
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/trascender/controlador.js"></script>
+		
+	</body>
+</html>

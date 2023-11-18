@@ -1,0 +1,107 @@
+<!--use:database/main-->
+
+<!--define:css-->
+
+<!--/define:css-->
+
+<!--define:main-->
+	
+	<ol class="breadcrumb">
+		<li>
+			<a data-ng-click="ctrl.database.restartObjetos()">Home</a>
+		</li>
+		<li class="active" data-ng-show="ctrl.database.objeto" data-ng-dblclick="ctrl.database.restartRegistros()">
+			{{ctrl.database.objeto.label || ctrl.database.objeto.name}}
+		</li>
+		<li class="pull-right">
+			{{ctrl.database.registros.cant}}
+		</li>
+	</ol>
+	
+	<div class="table-responsive">
+		<table class="table" data-ng-show="ctrl.database.objeto">
+			<thead>
+				<tr>
+					<th></th>
+					<th data-ng-repeat="(attr,value) in (ctrl.database.objeto.projection || ctrl.database.objeto.schema)">
+						{{attr}}
+					</th>
+					<th>
+						<button type="button" class="btn btn-primary btn-xs" data-ng-click="ctrl.database.newRegistro()">
+							<i class="fa fa-plus"></i>
+						</button>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="row in ctrl.database.registros.coll" data-ng-dblclick="ctrl.database.selectRegistros(row)" data-ng-class="row._class">
+					<td>{{$index+1}}</td>
+					<td data-ng-repeat="(attr,value) in (ctrl.database.objeto.projection || ctrl.database.objeto.schema)">
+						{{row[attr]}}
+					</td>
+					<td>
+						<button type="button" class="btn btn-info btn-xs" data-ng-click="ctrl.database.selectRegistro(row)">
+							<i class="fa fa-eye"></i>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<span class="text-center" data-ng-click="ctrl.database.loadRegistros()">
+			{{ctrl.database.registros.obtained}}/{{ctrl.database.registros.cant}}
+		</span>
+	</div>
+	
+	<div data-ng-show="ctrl.database.registros.selected.length > 0">
+		<hr>
+		<button type="button" class="btn btn-danger btn-lg btn-block" data-ng-click="ctrl.database.deleteRegistros()"  title="Eliminar">
+			<i class="fa fa-trash"></i> Eliminar registros seleccionados ({{ctrl.database.registros.selected.length}})
+		</button>
+		</hr>
+	</div>
+	
+	<div data-ng-show="ctrl.database.objeto">
+		
+		<h1>Configuración del Objeto {{ctrl.database.objeto.label || ctrl.database.objeto.name}}</h1>
+		
+		<textarea class="form-control" rows="20" data-ng-model="ctrl.database.objeto.content"></textarea>
+		
+		<div class="text-right">		
+			<button type="button" class="btn btn-warning" data-ng-click="ctrl.database.import()" title="Importar">
+				<i class="fa fa-database"></i>
+			</button>
+			<button type="button" class="btn btn-primary" data-ng-click="ctrl.database.createObjeto()" data-ng-show="!ctrl.database.objeto._id" title="Crear">
+				<i class="fa fa-check"></i>
+			</button>
+			<button type="button" class="btn btn-danger" data-ng-click="ctrl.database.deleteObjeto()" data-ng-show="ctrl.database.objeto._id" title="Eliminar">
+				<i class="fa fa-trash"></i>
+			</button>
+			<button type="button" class="btn btn-success" data-ng-click="ctrl.database.updateObjeto()" data-ng-show="ctrl.database.objeto._id" title="Actualizar">
+				<i class="fa fa-check"></i>
+			</button>
+		</div>
+	</div>
+	
+	<div data-ng-show="ctrl.database.registro">
+	
+		<h1>Contenido del registro {{ctrl.database.registro._id}}</h1>
+	
+		<textarea class="form-control" rows="20" data-ng-model="ctrl.database.registro.content"></textarea>
+		
+		<div class="text-right">
+			<button type="button" class="btn btn-primary" data-ng-click="ctrl.database.createRegistro()" data-ng-show="!ctrl.database.registro._id" title="Crear">
+				<i class="fa fa-check"></i>
+			</button>
+			<button type="button" class="btn btn-danger" data-ng-click="ctrl.database.deleteRegistro()" data-ng-show="ctrl.database.registro._id" title="Eliminar">
+				<i class="fa fa-trash"></i>
+			</button>
+			<button type="button" class="btn btn-success" data-ng-click="ctrl.database.updateRegistro()" data-ng-show="ctrl.database.registro._id" title="Actualizar">
+				<i class="fa fa-check"></i>
+			</button>
+		</div>
+		
+	</div>
+
+	<script src="/database/main/_.js"></script>
+	
+<!--/define:main-->

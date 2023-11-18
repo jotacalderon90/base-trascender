@@ -1,0 +1,154 @@
+<!--use:mailing/main-->
+
+<!--define:script-->
+
+	<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/ckeditor/ckeditor.js"></script>
+
+<!--/define:script-->
+
+<!--define:main-->
+
+				<div class="modal-header">
+					<span class="modal-title">
+						Formulario Memo
+					</span>
+				</div>
+				<div class="modal-body text-justify">
+				
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Asunto" data-ng-model="ctrl.mailing.doc.subject" >
+					</div>
+				
+					<div class="form-group" data-ng-show="ctrl.mailing.doc.subject!=''">
+						<label>Tipo de envío</label>
+						<select class="form-control" data-ng-model="ctrl.mailing.doc.type">
+							<option>plain</option>
+							<option>ckeditor</option>
+							<option>template</option>
+						</select>
+					</div>
+					
+					<div data-ng-show="ctrl.mailing.doc.type=='plain'">		
+						<input type="text" class="form-control input-sm" data-ng-model="ctrl.mailing.doc.text" placeholder="Mensaje"/>
+						<br/>
+						<br/>
+					</div>
+					
+					<div data-ng-show="ctrl.mailing.doc.type=='template'">
+						<div class="form-group">
+							<label>Seleccione plantilla para enviar mails</label>
+							<select class="form-control" data-ng-model="ctrl.mailing.doc.template" data-ng-change="ctrl.mailing.selectTemplate()">
+								<option data-ng-repeat="row in ctrl.mailing.templates">{{row}}</option>
+							</select>
+						</div>
+						<iframe style="width:100%;min-height: 500px;border:0px;"></iframe>
+						<table class="table" data-ng-show="ctrl.mailing.doc.template_metadata">
+							<thead>
+								<tr>
+									<th>Metadata</th>
+									<th>Tipo</th>
+									<th>Valor</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-repeat="row in ctrl.mailing.doc.template_metadata">
+									<td>{{row.label}}</td>
+									<td>
+										<select data-ng-model="row.type" class="form-control input-sm">
+											<option value="static">Definir valor</option>
+											<option value="document">Usar valor del usuario</option>
+										</select>
+									</td>
+									<td>
+										<input type="text" class="form-control input-sm" data-ng-model="row.value" data-ng-show="row.type=='static'"/>
+									</td>
+									<td>
+										<button class="btn btn-warning btn-xs" data-ng-click="ctrl.mailing.doc.template_metadata.splice($index,1)">
+										<i class="fa fa-trash"></i>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					
+					<div data-ng-show="ctrl.mailing.doc.type=='ckeditor'">	
+						<input type="text" class="form-control" id="mailing_input_content" placeholder="Contenido" />	
+						<br/>
+						<br/>
+					</div>
+					
+					<div class="form-group" data-ng-show="ctrl.mailing.doc.type!=''">
+						<div class="input-group">
+							<input type="text" class="form-control" data-ng-model="ctrl.mailing.doc.to" id="to" placeholder="Destinatarios separados por coma.">
+							<div class="input-group-btn">
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+								<ul class="dropdown-menu dropdown-menu-right">
+									<li><a data-ng-click="ctrl.mailing.selectRoles('*')">todos</a></li>
+									<li><a data-ng-repeat="rol in ctrl.mailing.users_tag" data-ng-click="ctrl.mailing.selectRoles(rol)">{{rol}}</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group" data-ng-show="ctrl.mailing.doc.to!=''">
+						<label>Tags</label>
+						<input id="mailing_input_tag" type="text" class="form-control" placeholder="Agregar tag" data-ng-model="ctrl.mailing.doc.tagbk" data-ng-keypress="ctrl.mailing.addTag($event)">
+						<ul class="list-unstyled list-inline">
+							<li data-ng-repeat="row in ctrl.mailing.doc.tag">
+								<span class="label label-default">
+								{{row}} 
+								<i class="fa fa-close text-danger" data-ng-click="ctrl.mailing.removeTag($index)"></i>
+								</span>
+							</li>
+						</ul>
+					</div>
+					<div class="form-group" data-ng-show="ctrl.mailing.doc.tag.length > 0">
+						<label>Tag Principal</label>
+						<select class="form-control" data-ng-model="ctrl.mailing.doc.tag_main" >
+							<option data-ng-repeat="row in ctrl.mailing.doc.tag">{{row}}</option>
+						</select>
+					</div>
+					
+					<div data-ng-show="ctrl.mailing.doc.tag_main!=''">				
+						<div class="form-group">
+							<label>¿Enviar correo al guardar?</label>
+							<input type="checkbox" data-ng-model="ctrl.mailing.doc.send">
+						</div>
+						<div class="form-group">
+							<label>¿Correo visto por destinatario?</label>
+							<input type="checkbox" data-ng-model="ctrl.mailing.doc.view">
+						</div>
+						<div class="form-group">
+							<label>Confirme datos</label>
+							<input type="checkbox" data-ng-model="ctrl.mailing.doc.confirm">
+						</div>
+					</div>
+					
+					<br>
+					<br>
+					<br>
+				</div>
+				<div class="modal-footer-bg"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" title="Crear" data-ng-click="ctrl.mailing.create()" data-ng-show="ctrl.mailing.doc.confirm">
+						<i class="fa fa-check"></i>
+					</button>
+					<button type="button" class="btn btn-danger" title="Eliminar" data-ng-click="ctrl.mailing.delete()" data-ng-show="ctrl.mailing.isEditMode()">
+						<i class="fa fa-trash"></i>
+					</button>
+					<a href="/" class="btn btn-info">
+						<i class="fa fa-close"></i>
+					</a>
+				</div>
+	
+	<script>
+
+		var doc = ({{data:JSON.stringify(doc.row)}});
+
+	</script>
+	
+	<script src="mailing/form/_.js"></script>	
+	
+<!--/define:main-->

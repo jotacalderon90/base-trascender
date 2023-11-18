@@ -1,0 +1,15 @@
+FROM node:16.13.1 as build-stage
+
+CMD mkdir /srv/cf.blog
+
+COPY ["package.json","/srv/cf.blog/"]
+
+WORKDIR /srv/cf.blog
+
+RUN npm install
+
+COPY [".", "/srv/cf.blog/"]
+
+EXPOSE 80
+
+CMD [ "npm", "run", "dev" ]

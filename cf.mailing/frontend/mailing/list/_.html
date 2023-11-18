@@ -1,0 +1,81 @@
+<!--use:mailing/main-->
+
+<!--define:main-->
+
+				<div class="div">
+					<div class="btn-group menu-inside btn-head left">
+						<button type="button" class="dropdown-toggle btn-head" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fa fa-bars"></i>
+						</button>
+						<ul class="dropdown-menu">
+							<li data-ng-repeat="tag in ctrl.object.tags" data-ng-click="ctrl.object.refresh(tag)">
+								{{tag}}
+							</li>
+						</ul>
+					</div>
+					<h4 class="modal-title">Lista de memos</h4>
+					<div class="btn-group menu-inside btn-head right">
+						<button type="button" class="btn-head" data-ng-click="ctrl.object.refresh()">
+							<i class="fa fa-refresh"></i>
+						</button>
+					</div>
+				</div>
+				<div class="modal-body text-left">
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>
+										Asunto
+									</th>
+									<th>
+										Destinatario
+									</th>
+									<th>
+										Fecha
+									</th>
+									<th>
+										Visto
+									</th>
+									<th>
+									</th>
+									<td>
+										<input type="checkbox" data-ng-model="ctrl.object.markDelete" data-ng-change="ctrl.object.setDelete()"/>
+									</td>
+								</tr>
+							</thead>
+							<tr data-ng-repeat="row in ctrl.object.coll">
+								<td>{{row.subject}}</td>
+								<td>
+									<span data-ng-repeat="to in row.to">
+										{{to.email}}
+										<br/>
+									</span>
+								</td>
+								<td>{{row.created}}</td>
+								<td>{{row.view}}</td>
+								<td>
+									<a href="/" data-ng-href="/edit/{{row._id}}" class="pull-right">
+										<i class="fa fa-eye"></i>
+									</a>
+								</td>
+								<td>
+									<input type="checkbox" data-ng-model="row.delete"/>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<p class="text-right" data-ng-click="ctrl.object.getCollection()">{{ctrl.object.coll.length}}/{{ctrl.object.cant}}</p>
+				</div>
+				<div class="modal-footer-bg"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" title="Eliminar seleccionados" data-ng-click="ctrl.object.delete()">
+						<i class="fa fa-trash"></i>
+					</button>
+					<a href="/new" class="btn btn-primary" title="Crear">
+						<i class="fa fa-plus"></i>
+					</a>
+				</div>
+
+	<script src="/mailing/list/_.js"></script>
+<!--/define:main-->

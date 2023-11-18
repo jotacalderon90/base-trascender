@@ -1,0 +1,15 @@
+FROM node:16.13.1 as build-stage
+
+CMD mkdir /srv/cf.ecommerce
+
+COPY ["package.json","/srv/cf.ecommerce/"]
+
+WORKDIR /srv/cf.ecommerce
+
+RUN npm install
+
+COPY [".", "/srv/cf.ecommerce/"]
+
+EXPOSE 80
+
+CMD [ "npm", "run", "dev" ]

@@ -1,0 +1,30 @@
+/********/
+/*LOADER*/
+/********/
+.loader{
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: black;
+	z-index: 9999;
+	opacity: 0.5;
+	top: 0;
+}
+.loader i{
+	color: white;
+	width: 25px;
+	height: 25px;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+}
+
+/***************/
+/*AUTOCOMPLETAR*/
+/***************/
+.ui-autocomplete{
+	z-index: 9999!important;
+}

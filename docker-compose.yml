@@ -1,0 +1,145 @@
+version: "3.9"
+
+x-common-variables: &common-variables
+  HOST_ARCHIVOSPUBLICOS: "http://127.0.0.1:2201"
+  HOST_ACCOUNT: "http://127.0.0.1:2202"
+  SESSION_SECRET: "trascender-con-sso"
+  MONGO_URL: "mongodb://host.docker.internal:27017"
+  MONGO_DBNAME: "miscolecciones"
+
+services:
+ 
+  archivospublicos:
+    build:
+      context: ./cf.archivospublicos
+      dockerfile: Dockerfile.dev
+    image: archivospublicos:0.0.1
+    container_name: archivospublicos
+    volumes:
+      - ./cf.archivospublicos:/srv/cf.archivospublicos/
+      - /srv/cf.archivospublicos/node_modules
+      - /srv/cf.archivospublicos/frontend/bower_components
+    environment:
+       <<: *common-variables
+       HOST: "http://127.0.0.1:2201"
+    ports:
+      - "2201:80"
+      
+  account:
+    build:
+      context: ./cf.account
+      dockerfile: Dockerfile.dev
+    image: account:0.0.1
+    container_name: account
+    depends_on:
+      - archivospublicos
+    volumes:
+      - ./cf.account:/srv/cf.account/
+      - /srv/cf.account/node_modules
+    environment:
+       <<: *common-variables
+       HOST: "http://127.0.0.1:2202"
+    ports:
+      - "2202:80"
+
+  database:
+    build:
+      context: ./cf.database
+      dockerfile: Dockerfile.dev
+    image: database:0.0.1
+    container_name: database
+    depends_on:
+      - account
+    volumes:
+      - ./cf.database:/srv/cf.database/
+      - /srv/cf.database/node_modules
+    environment:
+       <<: *common-variables
+       HOST: "http://127.0.0.1:2203"
+    ports:
+      - "2203:80"
+
+  cms:
+    build:
+      context: ./cf.cms
+      dockerfile: Dockerfile.dev
+    image: cms:0.0.1
+    container_name: cms
+    depends_on:
+      - database
+    volumes:
+      - ./cf.cms:/srv/cf.cms/
+      - /srv/cf.cms/node_modules
+    environment:
+       <<: *common-variables
+       HOST: "http://127.0.0.1:2204"
+    ports:
+      - "2204:80"
+
+  mailing:
+    build:
+      context: ./cf.mailing
+      dockerfile: Dockerfile.dev
+    image: mailing:0.0.1
+    container_name: mailing
+    depends_on:
+      - cms
+    volumes:
+      - ./cf.mailing:/srv/cf.mailing/
+      - /srv/cf.mailing/node_modules
+    environment:
+       <<: *common-variables
+       HOST: "http://127.0.0.1:2205"
+    ports:
+      - "2205:80"
+      
+  blog:
+    build:
+      context: ./cf.blog
+      dockerfile: Dockerfile.dev
+    image: blog:0.0.1
+    container_name: blog
+    depends_on:
+      - mailing
+    volumes:
+      - ./cf.blog:/srv/cf.blog/
+      - /srv/cf.blog/node_modules
+    environment:
+       <<: *common-variables
+       HOST: "http://127.0.0.1:2206"
+    ports:
+      - "2206:80"
+      
+  ecommerce:
+    build:
+      context: ./cf.ecommerce
+      dockerfile: Dockerfile.dev
+    image: ecommerce:0.0.1
+    container_name: ecommerce
+    depends_on:
+      - blog
+    volumes:
+      - ./cf.ecommerce:/srv/cf.ecommerce/
+      - /srv/cf.ecommerce/node_modules
+    environment:
+       <<: *common-variables
+       HOST: "http://127.0.0.1:2207"
+    ports:
+      - "2207:80"
+      
+  chat:
+    build:
+      context: ./cf.chat
+      dockerfile: Dockerfile.dev
+    image: chat:0.0.1
+    container_name: chat
+    depends_on:
+      - blog
+    volumes:
+      - ./cf.chat:/srv/cf.chat/
+      - /srv/cf.chat/node_modules
+    environment:
+       <<: *common-variables
+       HOST: "http://127.0.0.1:2208"
+    ports:
+      - "2208:80"

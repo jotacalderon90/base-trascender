@@ -1,0 +1,55 @@
+<!--use:account/main-->
+
+<!--define:css-->
+
+	<!--if:process.env.RECAPTCHA_PUBLIC && process.env.RECAPTCHA_PUBLIC!=''-->
+	<script src='https://www.google.com/recaptcha/api.js'></script>
+	<!--/if-->
+		
+<!--/define:css-->
+
+<!--define:main-->
+
+	<div class="row">
+		<div class="col-md-4 col-md-offset-4 text-center">		
+			<form action="/api/account/login" method="POST">
+				<h1>Ingreso de sesión</h1>
+				
+				<input class="form-control" placeholder="Email" name="email" type="text" autofocus=""/>
+				
+				<br>
+				
+				<input class="form-control" placeholder="Password" name="password" type="password" value=""/>
+				
+				<br>
+				
+				<!--if:process.env.RECAPTCHA_PUBLIC && process.env.RECAPTCHA_PUBLIC!=''-->
+				<div class="form-group">
+					<div class="g-recaptcha" data-sitekey="{{data:process.env.RECAPTCHA_PUBLIC}}"></div>
+				</div>
+				<!--/if-->
+				
+				<button type="submit" class="btn btn-lg btn-success btn-block" >Ingresar</button>
+				
+				<!--if:doc.google_auth && doc.google_auth!=''-->
+				<a href="{{data:doc.google_auth}}" class="btn btn-lg btn-primary btn-block">
+					<img src="https://cdn4.iconfinder.com/data/icons/new-google-logo-2015/400/new-google-favicon-512.png" height="20" alt="login con google" title="login con google"/>
+					Ingresar con Google
+				</a>
+				<!--/if-->
+				
+				<hr>
+				
+				<!--if:process.env.CANCREATE && process.env.CANCREATE=='1'-->
+				<a href="/form" class="pull-left">Crear cuenta</a>
+				<!--/if-->
+				
+				<!--if:process.env.CANRECOVERY && process.env.CANRECOVERY=='1'-->
+				<a href="/forget" class="pull-right">¿Olvidaste tu password?</a>
+				<!--/if-->
+				
+			</form>
+		</div>
+	</div>
+	
+<!--/define:main-->

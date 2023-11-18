@@ -1,0 +1,15 @@
+FROM node:16.13.1 as build-stage
+
+CMD mkdir /srv/cf.database
+
+COPY ["package.json","/srv/cf.database/"]
+
+WORKDIR /srv/cf.database
+
+RUN npm install --only=production
+
+COPY [".", "/srv/cf.database/"]
+
+EXPOSE 80
+
+CMD [ "npm", "run", "start" ]

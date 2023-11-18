@@ -1,0 +1,67 @@
+<!--use:main-->
+
+<!--define:script-->
+	<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/ckeditor/ckeditor.js"></script>
+	<script src="/cms/ecommerce/index/_.js"></script>
+<!--/define:script-->
+
+<!--define:main-->
+	
+	<ol class="breadcrumb">
+		<li><a href="/">Home</a></li>
+		<li class="active">{{ctrl.object.name}}</li>
+	</ol>
+	
+	<div class="btn-group pull-right">
+		<button type="button" class="dropdown-toggle btn btn-default btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<i class="fa fa-bars"></i>
+		</button>
+		<ul class="dropdown-menu">
+			<li data-ng-repeat="tag in ctrl.object.tags" data-ng-click="ctrl.object.refresh(tag)">
+				{{tag}}
+			</li>
+		</ul>
+	</div>
+	
+	<h4>
+		Administración del {{ctrl.object.name}} 
+		<small>
+			<span data-ng-show="ctrl.object.query.tag">| {{ctrl.object.query.tag}}</span>
+			<span data-ng-click="ctrl.object.getCollection()"> {{ctrl.object.coll.length}}/{{ctrl.object.cant}}</span>
+		</small>
+	</h4>
+	
+	<hr>
+					
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>
+						Título
+						<div class="pull-right">	
+							<a class="btn btn-xs btn-primary" data-ng-href="/{{ctrl.object.name}}/form?host={{ctrl.object.host}}">
+								<i class="fa fa-plus"></i>
+							</a>					
+							<button type="button" class="btn btn-xs btn-info" data-ng-click="ctrl.object.refresh()">
+								<i class="fa fa-refresh"></i>
+							</button>
+						</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>			
+				<tr data-ng-repeat="row in ctrl.object.coll">
+					<td>
+						{{row.title}}
+						<a href="/" data-ng-href="/{{ctrl.object.name}}/{{row._id}}?host={{ctrl.object.host}}" class="pull-right">
+							<i class="fa fa-eye"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<p class="text-right" data-ng-click="ctrl.object.getCollection()">{{ctrl.object.coll.length}}/{{ctrl.object.cant}}</p>
+
+<!--/define:main-->

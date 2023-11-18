@@ -1,0 +1,50 @@
+<div class="modal fade" id="promise_modal_prompt" >
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="left btn-head">
+					<i class="fa fa-close"></i>
+				</button>
+				<span class="modal-title"></span>
+			</div>
+			<div class="modal-body text-justify">
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	app.modules.prompt = function(parent){
+		this.parent = parent;
+	}
+	
+	app.modules.prompt.prototype.execute = function(title,type,placeholder,value){
+		return new Promise((resolve,reject)=>{
+			const input = document.createElement('input');
+			input.type = type;
+			input.value = value || '';
+			input.placeholder = placeholder;
+			input.setAttribute('class','form-control');
+			input.addEventListener( 'keypress' , function(event){
+				if(event.which === 13){
+					$('#promise_modal_prompt').modal('hide');
+					resolve(this.value);
+				}
+			});
+			$('#promise_modal_prompt .modal-title').html(title);
+			$('#promise_modal_prompt .modal-body').html(input);
+			$('#promise_modal_prompt').modal('show');
+			
+			$('#promise_modal_prompt .btn-head').unbind('click');
+			$('#promise_modal_prompt .btn-head').click(()=>{
+				$('#promise_modal_prompt').modal('hide');
+				resolve('')
+			});
+		});
+	}
+	
+	app.modules.start = function(){
+		$('#promise_modal_prompt').modal('hide');
+	}
+</script>

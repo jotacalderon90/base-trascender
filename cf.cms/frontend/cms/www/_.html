@@ -1,0 +1,174 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		
+		<title>Gestión de contenido WWW</title>
+		
+		<base href="/" />
+		
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
+		
+		<link rel="stylesheet" href="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/font-awesome/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/jquery-ui/themes/base/jquery-ui.min.css" />
+		<link rel="stylesheet" href="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/codemirror/lib/codemirror.css"/>
+		<link rel="stylesheet" href="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/trascender/main.css"/>
+		<link rel="stylesheet" href="cms/www/_.css" />
+		
+	</head>
+	<body>
+		
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/jquery-ui/jquery-ui.min.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/angular/angular.min.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/codemirror/lib/codemirror.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/codemirror/mode/xml/xml.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/ckeditor/ckeditor.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/moment.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/moment-with-locales.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/trascender/global.js"></script>
+		<script src="cms/www/formatting.js"></script>
+		<script src="cms/www/trascender.js"></script>
+
+		<div class="loader">
+			<i class="fa fa-spin fa-spinner"></i>
+		</div>
+
+		
+		<div id="app" data-ng-app="myApp" data-ng-controller="myCtrl as ctrl">
+
+			<!--include:global/selector/_-->
+			
+			<input type="checkbox" id="abrir-cerrar" name="abrir-cerrar" value="">
+			<label for="abrir-cerrar">&#9776;</label>
+			
+			<nav id="nav-main">
+				<div class="tree-classic" 
+					treecontrol 
+					tree-model="ctrl.directory.coll" 
+					on-selection="ctrl.directory.changeMode('select',node)" 
+					selected-node="ctrl.directory.doc" 
+					expanded-nodes="ctrl.directory.expanded"
+					options="ctrl.directory.treeoptions">{{node.name}}
+				</div>
+				<br>
+				<div data-ng-show="ctrl.www.directory.doc!=null">
+					<button class="btn btn-block btn-xs btn-primary btn-modal" data-toggle="modal" data-target="#mdCONTENT" data-ng-click="ctrl.www.cargarContenido()">CONTENIDO</button>
+					<button class="btn btn-block btn-xs btn-primary btn-modal" data-toggle="modal" data-target="#mdHTML" data-ng-click="ctrl.www.cargarHTML()">HTML</button>
+					<button class="btn btn-block btn-xs btn-primary" data-toggle="modal" data-target="#mdDOM">DOM</button>
+				</div>
+			</nav>
+			
+			<div id="visualcontent">
+				<div class="alert alert-warning alert-ini">
+					<p>Seleccione un archivo del menú para iniciar la construcción</p>
+				</div>
+			</div>
+			
+			<div class="modal fade" id="mdCONTENT">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-body">
+							<div id="form-dinamyc"></div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-xs btn-success" data-ng-click="ctrl.www.contenteditor.process()"><i class="fa fa-magic"></i> Refrescar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="modal fade" id="mdHTML">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-body">
+							<div class="row">
+								<div class="col-md-4">
+									<p class="text-muted">Head</p>
+									<div id="contenthead"></div>
+								</div>
+								<div class="col-md-4">
+									<p class="text-muted">Body</p>
+									<div id="contentbody"></div>
+								</div>
+								<div class="col-md-4">
+									<p class="text-muted">Javascript</p>
+									<div id="contentjs"></div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-xs btn-success" data-ng-click="ctrl.www.dom.inverse()">Ingeniería Inversa</button>
+						</div>
+					</div>
+				</div>	
+			</div>
+			
+			<div class="modal fade" id="mdDOM">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-body">
+							<ul class="list-group" id="uiTreedom" ondragover="dragTreedom.over(event)" ondragenter="dragTreedom.enter(event)" ondrop="dragTreedom.drop(event)"></ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="modal fade" id="dvModal">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-body">
+							<table class="table">
+								<tbody>
+									<tr>
+										<th>Elemento</th>
+										<td>{{ctrl.www.node.data.doc.nodeName}}</td>
+										<td></td>
+									</tr>
+									<tr>
+										<th>Atributo</th>
+										<th>Valor</th>
+										<th></th>
+									</tr>
+									<tr data-ng-repeat="attr in ctrl.www.node.data.doc.attributes">
+										<td><input type="text" class="form-control input-sm" data-ng-model="attr.name"/></td>
+										<td><input type="text" class="form-control input-sm" data-ng-model="attr.value"/></td>
+										<td class="text-center">
+											<button class="btn btn-danger btn-xs" data-ng-click="ctrl.www.node.methods.removeAttr(attr.name)">
+											<i class="fa fa-trash"></i>
+											</button>
+										</td>
+									</tr>
+									<tr>
+										<td><input type="text" class="form-control input-sm" placeholder="Nuevo atributo.name" data-ng-model="ctrl.www.node.data.new.attr.name"/></td>
+										<td><input type="text" class="form-control input-sm" placeholder="Nuevo atributo.value" data-ng-model="ctrl.www.node.data.new.attr.value"/></td>
+										<td class="text-center">
+											<button class="btn btn-success btn-xs" data-ng-click="ctrl.www.node.methods.pushAttr(ctrl.www.node.data.new.attr.name,ctrl.www.node.data.new.attr.value);ctrl.www.node.data.new.attr.name='';ctrl.www.node.data.new.attr.value='';">
+											<i class="fa fa-check"></i>
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div>
+								<p>TextNode</p>
+								<textarea class="form-control input-sm" rows="5" data-ng-model="ctrl.www.node.data.doc.innerHTML"></textarea>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-success btn-xs" data-ng-click="ctrl.www.node.methods.save2()"><span class="glyphicon glyphicon-ok"></span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script src="cms/www/_.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/trascender/controlador.js"></script>
+		
+	</body>
+</html>

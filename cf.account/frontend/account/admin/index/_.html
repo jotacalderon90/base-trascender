@@ -1,0 +1,92 @@
+<!--use:account/main-->
+
+<!--define:script-->
+	<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/ckeditor/ckeditor.js"></script>
+	<script src="/account/admin/index/_.js"></script>
+<!--/define:script-->
+
+<!--define:main-->
+	
+	<!--include:promise/prompt-->
+	
+	<ol class="breadcrumb">
+		<li><a href="/">Perfil</a></li>
+		<li class="active">Usuarios</li>
+	</ol>
+	
+	<div class="btn-group pull-right">
+		<button type="button" class="dropdown-toggle btn btn-default btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<i class="fa fa-bars"></i>
+		</button>
+		<ul class="dropdown-menu">
+			<li data-ng-repeat="tag in ctrl.object.tags" data-ng-click="ctrl.object.refresh(tag)">
+				{{tag}}
+			</li>
+		</ul>
+	</div>
+	
+	<h4>
+		Administración de usuarios
+		<small>
+			<span data-ng-show="ctrl.object.query.tag">| {{ctrl.object.query.tag}}</span>
+			<span data-ng-click="ctrl.object.getCollection()"> {{ctrl.object.coll.length}}/{{ctrl.object.cant}}</span>
+		</small>
+	</h4>
+	
+	<hr>
+					
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>
+						Información
+						<div class="pull-right">
+							<!--
+							<a class="btn btn-xs btn-primary" data-ng-href="/{{ctrl.object.name}}/form?host={{ctrl.object.host}}">
+								<i class="fa fa-plus"></i>
+							</a>
+							-->
+							<button type="button" class="btn btn-xs btn-info" data-ng-click="ctrl.object.refresh()">
+								<i class="fa fa-refresh"></i>
+							</button>
+						</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>			
+				<tr data-ng-repeat="row in ctrl.object.coll">
+					<td>
+						{{row.email}},
+						{{row.roles.join(',')}},
+						{{row.activate}}
+						
+						<div class="pull-right">
+							<button class="btn btn-default" data-ng-click="ctrl.object.changeRoles(row)" title="actualizar roles">
+								<span>Actualizar roles</span>
+								<i class="fa fa-info-circle pull-right"></i>
+							</button>
+							<button class="btn" data-ng-class="(row.activate)?'btn-primary':'btn-warning'" data-ng-click="ctrl.object.activate(row)" title="{{((row.activate)?'Deshabilitar':'Habilitar')}}">
+								<span>{{((row.activate)?'Deshabilitar':'Habilitar')}}</span>
+								<i class="fa pull-right" data-ng-class="(row.activate)?'fa-link':'fa-unlink'"></i>
+							</button>
+							<button class="btn btn-info" data-ng-click="ctrl.object.changePassword(row)" title="actualizar contraseña">
+								<span>Cambiar contraseña</span>
+								<i class="fa pull-right">电</i>
+							</button>
+							<button class="btn btn-default" data-ng-click="ctrl.object.enableRecovery(row)" title="enviar correo para recuperar contraseña">
+								<span>Enviar correo para actualizar contraseña</span>
+								<i class="fa fa-envelope pull-right"></i>
+							</button>
+							<button class="btn btn-danger" data-ng-click="ctrl.object.delete(row._id)" title="eliminar usuario">
+								<i class="fa fa-trash pull-right"></i>
+							</button>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<p class="text-right" data-ng-click="ctrl.object.getCollection()">{{ctrl.object.coll.length}}/{{ctrl.object.cant}}</p>
+
+<!--/define:main-->

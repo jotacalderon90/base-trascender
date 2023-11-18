@@ -1,0 +1,6 @@
+<div class="list-group">
+	<a class="list-group-item" data-ng-click="ctrl.database.newObjeto()">Nuevo objeto <i class="fa fa-plus pull-right"></i></a>
+	<a class="list-group-item" data-ng-repeat="row in ctrl.database.objetos" data-ng-click="ctrl.database.selectObjeto(row)">
+		{{ row.label || row.name}}
+	</a>
+</div>

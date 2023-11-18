@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+	<head>
+	
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		
+		<title>Mailing</title>
+		
+		<base href="/" />
+		
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
+		
+		<link rel="stylesheet" href="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/font-awesome/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/jquery-ui/themes/base/jquery-ui.min.css" />
+		<link rel="stylesheet" href="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/trascender/main.css" />
+		
+		<!--define:css-->
+		
+	</head>
+	<body>
+		
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/jquery-ui/jquery-ui.min.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/angular/angular.min.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/moment.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/moment-with-locales.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/trascender/global.js"></script>
+		
+		<!--define:script-->
+		
+		<div class="loader">
+			<i class="fa fa-spin fa-spinner"></i>
+		</div>
+		
+		<div id="app" data-ng-app="myApp" data-ng-controller="myCtrl as ctrl">
+			<!--include:mailing/nav-->
+			<div class="container-fluid">
+				<div class="col-md-12">
+					<!--define:main-->
+				</div>
+			</div>
+		</div>
+		
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/trascender/controlador.js"></script>
+		
+	</body>
+</html>

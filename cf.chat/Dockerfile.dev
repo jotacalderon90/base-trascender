@@ -1,0 +1,15 @@
+FROM node:16.13.1 as build-stage
+
+CMD mkdir /srv/cf.chat
+
+COPY ["package.json","/srv/cf.chat/"]
+
+WORKDIR /srv/cf.chat
+
+RUN npm install
+
+COPY [".", "/srv/cf.chat/"]
+
+EXPOSE 80
+
+CMD [ "npm", "run", "dev" ]

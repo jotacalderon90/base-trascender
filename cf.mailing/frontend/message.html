@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+	<head>
+	
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		
+		<title>Aviso!</title>
+		
+		<base href="/" />
+		
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
+		
+		<link rel="stylesheet" href="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/font-awesome/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/jquery-ui/themes/base/jquery-ui.min.css" />
+		<link rel="stylesheet" href="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/trascender/main.css" />
+		
+		<!--define:css-->
+		
+	</head>
+	<body>
+		
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/jquery-ui/jquery-ui.min.js"></script>
+		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3 text-center">			
+				<h1>{{data:doc.title}}</h1>
+				<p class="{{data:doc.class}}">{{data:doc.msg}}.</p>
+				<!--if:data:doc.status==401-->
+					<a href="{{data:process.env.HOST_ACCOUNT}}/login?redirectoTo={{data:doc.redirectTo}}">Ir al login</a>
+				<!--/if-->
+			</div>
+		</div>
+		
+	</body>
+</html>

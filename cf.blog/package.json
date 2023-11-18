@@ -1,0 +1,16 @@
+{
+	"name": "cl.jotacalderon.cf.blog",
+	"description": "sistema generico para blog",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"start": "node app",
+		"dev": "npx nodemon --legacy-watch app  --ignore frontend"
+	},
+	"dependencies": {
+		"cl.jotacalderon.cf.framework": "0.0.21"
+	},
+	"devDependencies": {		
+		"nodemon": "latest"
+	}
+}

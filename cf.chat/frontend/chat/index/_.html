@@ -1,0 +1,56 @@
+<!--use:chat/main-->
+
+<!--define:css-->
+	<link rel="stylesheet" href="chat/index/_.css" media="all"/>
+<!--/define:css-->
+
+<!--define:script-->
+	<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/socket.io-2.3.0.js"></script>
+	<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/jcryption.js"></script>
+<!--/define:script-->
+
+<!--define:main-->
+
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<label>Palabra secreta: <small>Utiliza secret por defecto</small></label>
+			<div class="input-group">
+				<input type="password" class="form-control" placeholder="Palabra secreta" data-ng-model="ctrl.chat.password" data-ng-show="!ctrl.chat.passwordShow"/>
+				<input type="text" class="form-control" placeholder="Palabra secreta" data-ng-model="ctrl.chat.password" data-ng-show="ctrl.chat.passwordShow"/>
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button" data-ng-click="ctrl.chat.passwordShow=!ctrl.chat.passwordShow">
+						<i class="fa fa-eye"></i>
+					</button>
+				</span>
+			</div>
+			
+			<hr>
+					
+			<label data-ng-dblclick="ctrl.chat.getUsers(true)">Usuarios conectados: {{ctrl.chat.users.length}}</label>
+					
+			<hr>
+					
+			<button class="btn btn-lg" data-ng-class="ctrl.chat.active?'btn-warning':'btn-primary'" data-ng-click="ctrl.chat.active=!ctrl.chat.active;ctrl.chat.setActive()">
+				<label data-ng-show="!ctrl.chat.active">Conectar al servidor</label>
+				<label data-ng-show="ctrl.chat.active">Desactivar del servidor</label>
+			</button>
+			
+			<div data-ng-show="ctrl.chat.active">
+				<hr>
+				<ul class="list-group" id="chat_list"></ul>
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="Escribe algo..." id="chat_input_message" data-ng-model="ctrl.chat.message" data-ng-keypress="ctrl.chat.keypress($event)">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button" data-ng-click="ctrl.chat.send()">
+							<i class="fa fa-check"></i>
+						</button>
+					</span>
+				</div>
+				<hr>
+			</div>			
+		</div>
+	</div>
+	
+	<script type="text/javascript" src="chat/index/_.js"></script>
+	
+<!--/define:main-->

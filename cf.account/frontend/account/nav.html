@@ -1,0 +1,48 @@
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">Cuenta de usuario</a>
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+						{{data:doc.user.nickname || 'anonimo'}}
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="/">Perfil</a></li>
+						<!--if:doc.user.roles.indexOf('root')>-1-->
+							<li><a href="/admin/admin">Usuarios</a></li>
+						<!--/if-->
+						<!--if:doc.user.roles.indexOf('root')>-1 || doc.user.roles.indexOf('cms')>-1-->
+							<li><a href="{{data:process.env.HOST_CMS}}">CMS</a></li>
+						<!--/if-->
+						<!--if:doc.user.roles.indexOf('root')>-1 || doc.user.roles.indexOf('cotizador')>-1-->
+							<li><a href="https://cotizador.jotace.cl">COTIZADOR</a></li>
+						<!--/if-->
+						<!--if:doc.user.roles.indexOf('root')>-1 || doc.user.roles.indexOf('prospectos')>-1-->
+							<li><a href="https://prospectos.jotace.cl">PROSPECTOS</a></li>
+						<!--/if-->
+						<!--if:doc.user.roles.indexOf('root')>-1 || doc.user.roles.indexOf('codigofuente')>-1-->
+							<li><a href="https://codigofuente.jotace.cl/codes">CODIGOS FUENTES</a></li>
+						<!--/if-->
+						<!--if:doc.user.roles.indexOf('root')>-1 || doc.user.roles.indexOf('analytic')>-1-->
+							<li><a href="https://log.jotace.cl">ANALYTIC</a></li>
+						<!--/if-->
+						<li role="separator" class="divider"></li>
+						<!--if:doc.user-->
+						<li><a href="/api/account/logout">Cerrar sesión</a></li>
+						<!--/if-->
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>

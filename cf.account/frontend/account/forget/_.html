@@ -1,0 +1,37 @@
+<!--use:account/main-->
+
+<!--define:css-->
+
+	<!--if:process.env.RECAPTCHA_PUBLIC && process.env.RECAPTCHA_PUBLIC!=''-->
+	<script src='https://www.google.com/recaptcha/api.js'></script>
+	<!--/if-->
+		
+<!--/define:css-->
+
+<!--define:main-->		
+			
+	<div class="row">
+		<div class="col-md-4 col-md-offset-4 text-center">	
+			<form action="/api/account/forget" method="POST">
+				<h1>Olvidaste tu password</h1>
+				<input class="form-control" placeholder="Email" name="email" type="text" />
+				<br>
+				
+				<!--if:process.env.RECAPTCHA_PUBLIC && process.env.RECAPTCHA_PUBLIC!=''-->
+				<div class="form-group">
+					<div class="g-recaptcha" data-sitekey="{{data:process.env.RECAPTCHA_PUBLIC}}"></div>
+				</div>
+				<!--/if-->
+				
+				<br>
+				<button type="submit" class="btn btn-lg btn-success btn-block" >Recupera tu password</button>
+				
+				<hr>
+				<div class="text-right">
+					<a href="/login">Ingresar con tu cuenta</a>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+<!--/define:main-->

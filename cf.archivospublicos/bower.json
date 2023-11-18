@@ -1,0 +1,16 @@
+{
+	"name": "cl.jotacalderon.cf.archivospublicos",
+	"description": "archivos publicos para paginas web",
+	"version": "0.0.1",
+	"private": true,
+	"dependencies": {
+		"angular": "1.8.2",
+		"bootstrap": "3.3.7",
+		"font-awesome": "4.7.0",
+		"jquery": "3.2.1",
+		"ckeditor": "4.5.11",
+		"jquery-ui": "1.12.1",
+		"gojs": "2.1.38",
+		"codemirror": "5.24.2"
+	}
+}

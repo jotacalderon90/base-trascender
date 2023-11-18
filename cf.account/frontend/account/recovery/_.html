@@ -1,0 +1,44 @@
+<!--use:account/main-->
+
+<!--define:css-->
+
+	<!--if:process.env.RECAPTCHA_PUBLIC && process.env.RECAPTCHA_PUBLIC!=''-->
+	<script src='https://www.google.com/recaptcha/api.js'></script>
+	<!--/if-->
+		
+<!--/define:css-->
+
+<!--define:main-->
+	
+	<div class="row">
+		<div class="col-md-4 col-md-offset-4 text-center">	
+			<form action="/api/account/recovery" method="POST" onsubmit="return account_recovery()">
+				<h1>Reestablecer contraseña</h1>
+				<input class="form-control" placeholder="Nueva password" name="password" type="password" value="" />
+				<br>
+				<input class="form-control" placeholder="Repita password" name="password2" type="password" value="" />
+				<br>
+				<input name="hash" type="hidden" value="{{data:doc.hash}}" />
+				
+				<!--if:process.env.RECAPTCHA_PUBLIC && process.env.RECAPTCHA_PUBLIC!=''-->
+				<div class="g-recaptcha" data-sitekey="{{data:process.env.RECAPTCHA_PUBLIC}}"></div>
+				<br>
+				<!--/if-->
+				
+				<button type="submit" class="btn btn-lg btn-success btn-block" >Reestablecer</button>
+			</form>
+		</div>
+	</div>
+	
+	<script>
+		
+		function account_recovery(){
+			if(document.forms[0].password.value!=document.forms[0].password2.value){
+				alert("Contraseñas no coindiden");
+				return false;
+			}
+			return true;
+		}
+		
+	</script>
+<!--/define:main-->

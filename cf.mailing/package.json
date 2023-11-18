@@ -1,0 +1,19 @@
+{
+	"name": "cl.jotacalderon.cf.mailing",
+	"description": "sistema para envio de mails",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"start": "node app",
+		"dev": "npx nodemon --legacy-watch app  --ignore frontend"
+	},
+	"dependencies": {
+		"cl.jotacalderon.cf.framework": "0.0.21",
+		"express-recaptcha": "2.1.0",
+		"nodemailer": "6.7.0",
+		"nodemailer-smtp-transport": "^2.4.2"
+	},
+	"devDependencies": {		
+		"nodemon": "latest"
+	}
+}

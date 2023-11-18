@@ -1,0 +1,52 @@
+
+	<!--include:global/leaflet/_-->
+	
+	<link rel="stylesheet" href="/global/map/_.css" />
+	
+	<div class="modal fade" id="promise_modal_map">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<span class="modal-title">
+						{{ctrl.map.data.title}}
+					</span>
+					<!--
+					<button type="button" class="btn-head right" data-ng-click="ctrl.map.close()">
+						<i class="fa fa-close"></i>
+					</button>-->
+				</div>
+				<div class="modal-body text-justify">
+					<div id="default_map_div_popup">
+						<img data-ng-src="{{ctrl.map.popup.img}}"/>
+						<h3>{{ctrl.map.popup.title}}</h3>
+						<br>
+						<p data-ng-show="ctrl.map.popup.date">{{ctrl.map.popup.date}}</p>
+						<p data-ng-show="ctrl.map.popup.resume">{{ctrl.map.popup.resume}}</p>
+						<a data-ng-repeat="row in ctrl.map.popup.tag" 
+							data-ng-href="/categoria/{{row}}?c=1" 
+							class="btn btn-xs btn-success" 
+							style="margin:5px;">
+							{{row}}
+						</a>
+					</div>
+					<div id="default_map_div"></div>
+				</div>
+				<div class="modal-footer text-center">
+					<button class="btn btn-lg btn-success pull-left" data-ng-show="ctrl.map.index > 0" data-ng-click="ctrl.map.prev()">
+						<i class="fa fa-chevron-left"></i>
+					</button>
+					<!--<a class="btn btn-lg btn-info" style="margin:auto" href="/categoria/{{ctrl.map.getRowUri()}}?c=1">
+						<i class="fa fa-eye"></i>
+					</a>-->
+					<button class="btn btn-lg btn-success pull-right" data-ng-show="ctrl.map.index < ctrl.map.full.cant - 1" data-ng-click="ctrl.map.next()">
+						<i class="fa fa-chevron-right"></i>
+					</button>
+					<button class="btn btn-lg btn-success pull-right" data-ng-show="ctrl.map.index >= ctrl.map.full.cant - 1" data-ng-click="ctrl.map.last()">
+						<i class="fa fa-chevron-right"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script src="/global/map/_.js"></script>

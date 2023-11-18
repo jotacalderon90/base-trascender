@@ -1,0 +1,111 @@
+<!--use:main-->
+
+<!--define:css-->
+	<link rel="stylesheet" href="/blog/collection/_.css" />
+<!--/define:css-->
+
+<!--define:script-->
+	
+	<script>
+		const rows = {{data:((!doc.rows)?"{}":JSON.stringify(doc.rows))}};
+	</script>
+	
+	<script src="/blog/collection/_.js"></script>
+
+<!--/define:script-->
+
+<!--define:main-->
+
+	<div class="modal fade" id="modal_list">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="btn-group menu-inside btn-head left">
+						<button type="button" class="dropdown-toggle btn-head" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fa fa-bars"></i>
+						</button>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="{{data:doc.www}}">
+									<i class="fa fa-home"></i>
+								</a>
+							</li>
+							<li>
+								<a href="/">
+									Todo
+								</a>
+							</li>
+							<!--repeat:doc.tags-->
+							<li>
+								<a href="/categoria/{{data:doc.tags[index]}}">{{data:doc.tags[index]}}</a>
+							</li>
+							<!--/repeat:doc.tags-->
+						</ul>
+					</div>
+					<h4 class="modal-title" data-ng-click="ctrl.object.toAdmin()">Mi Blog</h4>
+				</div>
+				
+				<!--if:doc.rows.length == 0-->
+				<div class="modal-body">
+					<div class="alert alert-warning">
+						<strong>Aún no se ha creado ninguna nota</strong>
+					</div>
+				</div>
+				<!--/if-->
+				
+				<!--if:doc.rows.length > 0-->
+				<div class="modal-body">
+					
+					<!--DESKTOP-->
+					<div class="hidden-xs">
+						<div class="row">
+							<!--repeat:doc.rows-->
+							<a href="{{data:doc.rows[index].uri}}">
+								<div class="col-md-6">
+									<article>
+										<img src="/logo.png" data-ng-src="{{data:process.env.HOST_CMS}}/assets/img/blog/{{data:doc.rows[index]._id}}.jpg" alt="{{data:doc.rows[index].resume}}" title="{{data:doc.rows[index].title}}"/>
+										<div class="info">
+											<h2>{{data:doc.rows[index].title}}</h2>
+											<small title="{{ctrl.object.coll[{{data:index}}].datetitle}}">
+												{{ctrl.object.coll[{{data:index}}].datefromnow}}
+											</small>
+										</div>
+									</article>
+								</div>
+							</a>
+							<!--/repeat:doc.rows-->
+						</div>
+					</div>
+					
+					<!--MOBILE-->
+					<a href="/" data-ng-href="{{ctrl.object.coll[ctrl.object.index].uri}}">
+						<article class="visible-xs">
+							<img src="/logo.png" data-ng-src="{{'{{data:process.env.HOST_CMS}}/assets/img/blog/' + ctrl.object.coll[ctrl.object.index]._id + '.jpg'}}" alt="{{ctrl.object.coll[ctrl.object.index].title}}" title="{{ctrl.object.coll[ctrl.object.index].title}}"/>
+							<div class="info">
+								<h2>{{ctrl.object.coll[ctrl.object.index].title}}</h2>
+								<small title="{{ctrl.object.coll[ctrl.object.index].datetitle}}">{{ctrl.object.coll[ctrl.object.index].datefromnow}}</small>
+							</div>
+						</article>
+					</a>
+				</div>
+				<!--/if-->
+				
+				<!--if:doc.rows.length > 0-->
+				
+				<!--FOOTER MOBILE-->
+				<div class="modal-footer visible-xs">
+					<p>{{ctrl.object.index+1}}/{{ctrl.object.coll.length}}</p>
+					<br>
+					<button type="button" class="btn btn-default pull-left" data-ng-click="ctrl.object.touchend('right')" data-ng-show="ctrl.object.index!=0">
+						<i class="fa fa-arrow-left"></i>
+					</button>
+					<button type="button" class="btn btn-default pull-right" data-ng-click="ctrl.object.touchend('left')" data-ng-show="ctrl.object.index < ctrl.object.coll.length - 1">
+						<i class="fa fa-arrow-right"></i>
+					</button>
+				</div>
+				<!--/if-->
+			</div>
+		</div>
+	</div>
+		
+<!--/define:main-->

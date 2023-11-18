@@ -1,0 +1,17 @@
+{
+	"name": "cl.jotacalderon.cf.chat",
+	"description": "sistema para chat",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"start": "node app",
+		"dev": "npx nodemon --legacy-watch app  --ignore frontend"
+	},
+	"dependencies": {
+		"cl.jotacalderon.cf.framework": "0.0.21",
+		"socket.io": "^2.1.6"
+	},
+	"devDependencies": {		
+		"nodemon": "latest"
+	}
+}

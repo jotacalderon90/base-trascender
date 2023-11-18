@@ -1,0 +1,38 @@
+<!--use:main-->
+	
+<!--define:script-->
+	<script>
+		const info = JSON.parse('{{data:JSON.stringify(doc.cms)}}');
+	</script>
+	<script src="/cms/index/_.js"></script>
+<!--/define:script-->
+
+<!--define:main-->
+
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+
+			<select class="form-control" data-ng-model="ctrl.cms.dominio" data-ng-change="ctrl.cms.selectDominio()">
+				<option value=''>Seleccione dominio</option>
+				<option data-ng-repeat="row in ctrl.cms.dominios" value="{{row}}">{{row}}</option>
+			</select>
+			
+			<div data-ng-show="ctrl.cms.dominio!=''">
+				<hr>
+				<select class="form-control" data-ng-model="ctrl.cms.subdominio" data-ng-change="ctrl.cms.selectSubDominio()">
+					<option value=''>Seleccione subdominio</option>
+					<option data-ng-repeat="row in ctrl.cms.subdominios" value="{{row}}">{{row}}</option>
+				</select>
+				
+				<div data-ng-show="ctrl.cms.subdominio!=''">
+					<hr>
+					<select class="form-control" data-ng-model="ctrl.cms.coleccion" data-ng-change="ctrl.cms.selectColeccion()">
+						<option value=''>Seleccione colección</option>
+						<option data-ng-repeat="row in ctrl.cms.colecciones" value="{{row}}">{{row}}</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+<!--/define:main-->

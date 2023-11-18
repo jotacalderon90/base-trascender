@@ -1,0 +1,145 @@
+<!--use:main-->
+
+<!--define:css-->
+
+	<!--if:process.env.RECAPTCHA_PUBLIC && process.env.RECAPTCHA_PUBLIC!=''-->
+	<script src='https://www.google.com/recaptcha/api.js'></script>
+	<!--/if-->
+		
+<!--/define:css-->
+
+<!--define:script-->
+	
+	<script src="/ecommerce/cart/_.js"></script>
+
+<!--/define:script-->
+
+<!--define:main-->
+
+<div class="modal fade" id="modal_form">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<span class="modal-title">
+				Carro de solicitud
+				</span>
+			</div>
+			<div class="modal-body text-justify">
+				<div class="alert alert-warning" data-ng-show="ctrl.object.doc.product.length==0">
+					<strong>Carro vacío</strong> aún no has seleccionado nada de nuestro catálogo<br>
+					<a href="/">
+					ir al catálogo de productos
+					</a>
+				</div>
+				<div data-ng-show="ctrl.object.doc.product.length>0">
+					<div class="visible-xs">
+						<a href="/">ir al catálogo de productos</a>
+						<article data-ng-repeat="row in ctrl.object.doc.product">
+							<img data-ng-src="{{data:process.env.HOST_CMS}}/assets/img/ecommerce/{{row._id}}.jpg" height="200" alt="imagen de publicación" title="imagen de publicación"/>
+							<h2>{{row.title}}</h2>
+							<p class="visible-xs"><strong >${{row.price|number}}</strong>.</p>
+							<button class="btn btn-warning btn-xs" type="button" data-ng-click="ctrl.object.remove($index)">
+							<span class="fa fa-trash"></span>
+							</button>
+							<!--<div class="input-group input-group-sm"  style="width:30%;">
+								<span class="input-group-btn">
+									<button class="btn btn-danger" type="button" data-ng-click="ctrl.object.remove($index)" data-ng-show="row.cant==1">
+										<span class="fa fa-trash"></span>
+									</button>
+								</span>
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="button" data-ng-click="row.cant=row.cant-1" data-ng-show="row.cant>1">
+										<span class="fa fa-minus"></span>
+									</button>
+								</span>
+								<input type="text" class="form-control" data-ng-model="row.cant" size="1" maxlength="3" data-ng-change="ctrl.object.updateCart()"/>
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="button" data-ng-click="row.cant=row.cant+1">
+										<span class="fa fa-plus"></span>
+									</button>
+								</span>
+								</div>-->
+						</article>
+						<br>
+						<div style="margin-left:52%;">Total<br><strong>${{ctrl.object.calculatetotal()|number}}</strong></div>
+					</div>
+					<table class="table hidden-xs">
+						<thead>
+							<tr>
+								<th colspan="3">
+									<a data-dismiss="modal" data-ng-click="ctrl.product.open()">ir al catálogo de productos</a>
+								</th>
+								<!--<th></th>
+									<th class="text-left"></th>
+									<th class="text-right">Precio</th>
+									<th class="text-center">Cantidad</th>-->
+								<th class="text-right">Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr data-ng-repeat="row in ctrl.object.doc.product">
+								<td class="text-center">
+									<button class="btn btn-warning btn-xs" type="button" data-ng-click="ctrl.object.remove($index)">
+									<span class="fa fa-trash"></span>
+									</button>
+								</td>
+								<td><img data-ng-src="{{data:process.env.HOST_CMS}}/assets/img/ecommerce/{{row._id}}.jpg" style="height:100px" alt="imagen de publicación" title="imagen de publicación"/></td>
+								<td>{{row.title}}</td>
+								<!--<td class="text-right">${{row.price|number}}</td>
+									<td>
+										<div class="input-group">
+											<span class="input-group-btn">
+												<button class="btn btn-danger" type="button" data-ng-click="ctrl.object.remove($index)" data-ng-show="row.cant==1">
+													<span class="fa fa-trash"></span>
+												</button>
+											</span>
+											<span class="input-group-btn">
+												<button class="btn btn-default" type="button" data-ng-click="row.cant=row.cant-1" data-ng-show="row.cant>1">
+													<span class="fa fa-minus"></span>
+												</button>
+											</span>
+											<input type="text" class="form-control" data-ng-model="row.cant" size="1" maxlength="3" data-ng-change="ctrl.object.updateCart()"/>
+											<span class="input-group-btn">
+												<button class="btn btn-default" type="button" data-ng-click="row.cant=row.cant+1">
+													<span class="fa fa-plus"></span>
+												</button>
+											</span>
+										</div>
+									</td>-->
+								<td class="text-right">{{ctrl.object.calculaterow(row)|number}}</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th colspan="3" class="text-right">Total</th>
+								<td class="text-right">{{ctrl.object.calculatetotal()|number}}</td>
+							</tr>
+						</tfoot>
+					</table>
+					<div>
+						<div class="form-group">
+							<label>Email</label>
+							<input type="email" class="form-control" data-ng-model="ctrl.object.doc.email">
+						</div>
+						<div class="form-group">
+							<label>Mensaje</label>
+							<textarea class="form-control" data-ng-model="ctrl.object.doc.message" rows="5"></textarea>
+						</div>
+						<div>
+							<!--if:process.env.RECAPTCHA_PUBLIC && process.env.RECAPTCHA_PUBLIC!=''-->
+							<div class="g-recaptcha" data-sitekey="{{data:process.env.RECAPTCHA_PUBLIC}}" data-tr="" data-label="Footer - Recaptcha" data-dinamyc="data-sitekey" >
+							</div>
+							<!--/if-->
+							<button class="btn btn-lg btn-block btn-success" data-ng-click="ctrl.object.create()">
+							<span class="fa fa-check"></span>
+							<span>Enviar cotización</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--/define:main-->

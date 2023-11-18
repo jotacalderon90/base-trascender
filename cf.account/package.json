@@ -1,0 +1,18 @@
+{
+	"name": "cl.jotacalderon.cf.account",
+	"description": "sistema de usuarios para uso generico",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"start": "node app",
+		"dev": "npx nodemon --legacy-watch app  --ignore frontend"
+	},
+	"dependencies": {
+		"cl.jotacalderon.cf.framework": "0.0.21",
+		"express-recaptcha": "2.1.0",
+		"googleapis": "^75.0.0"
+	},
+	"devDependencies": {		
+		"nodemon": "latest"
+	}
+}
