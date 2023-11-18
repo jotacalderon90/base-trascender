@@ -8,7 +8,7 @@ const request = require('cl.jotacalderon.cf.framework/lib/request');
 module.exports = {
 	
 	//@route('/api/admin/account/createadmin')
-	//@method(['post'])
+	//@method(['get'])
 	createAdmin: async function(req,res){
 		try{
 			
@@ -16,16 +16,15 @@ module.exports = {
 				throw("none");
 			}
 			
-			req.body.email = req.body.email.toLowerCase();
-			const cantXEmail = await mongodb.count("user",{email: req.body.email});
+			const cantXEmail = await mongodb.count("user",{email: 'root'});
 			if(cantXEmail!=0){
-				throw("El email ingresado ya está registrado");
+				throw("El usuario root ya existe");
 			}
 			const doc = {};
-			doc.email = req.body.email;
+			doc.email = 'root';
 			doc.hash = helper.random(10);
-			doc.password = helper.toHash(req.body.password + req.body.email,doc.hash);
-			doc.nickname = req.body.email;
+			doc.password = helper.toHash('123456root',doc.hash);
+			doc.nickname = 'root';
 			doc.notification = true;
 			doc.thumb = process.env.HOST_ARCHIVOSPUBLICOS + "/media/img/user.png";
 			doc.roles = ["root"];
