@@ -2,11 +2,10 @@
 
 module.exports = {
 	
-	//@route('/filemanager/admin')
+	//@route('/')
 	//@method(['get'])
-	//@roles(['root','admin'])
-	renderAdmin: function(req,res){
-		res.render('filemanager/admin/_',{user: req.user});
+	index: function(req,res){
+		res.render('filemanager/page/index/_');
 	}
 	
 }

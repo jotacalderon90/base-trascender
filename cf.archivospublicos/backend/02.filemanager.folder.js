@@ -14,7 +14,6 @@ module.exports = {
 	
 	//@route('/api/filemanager/folder/:id/total')
 	//@method(['get'])
-	//@roles(['root'])
 	total: async function(req,res){
 		try{
 			const dir = directory + decode(req.params.id);
@@ -29,7 +28,6 @@ module.exports = {
 	
 	//@route('/api/filemanager/folder/:id/collection')
 	//@method(['get'])
-	//@roles(['root'])
 	collection: async function(req,res){
 		try{
 			const dir = directory + decode(req.params.id);
@@ -40,41 +38,6 @@ module.exports = {
 		}catch(e){
 			response.APIError(req,res,e);
 		}
-	},
-	
-	//@route('/api/filemanager/folder/:id')
-	//@method(['post'])
-	//@roles(['root'])
-	create: async function(req,res){
-		try{
-			fs.mkdirSync(directory + decode(req.params.id) + req.body.name);
-			res.send({data: true});
-		}catch(e){
-			response.APIError(req,res,e);
-		}
-	},
-	
-	//@route('/api/filemanager/folder/:id')
-	//@method(['put'])
-	//@roles(['root'])
-	update: async function(req,res){
-		try{
-			fs.renameSync(directory + decode(req.params.id), directory + "/" + req.body.name);
-			res.send({data: true});
-		}catch(e){
-			response.APIError(req,res,e);
-		}
-	},
-	
-	//@route('/api/filemanager/folder/:id')
-	//@method(['delete'])
-	//@roles(['root'])
-	delete: async function(req,res){
-		try{
-			fs.rmdirSync(directory + decode(req.params.id));
-			res.send({data: true});
-		}catch(e){
-			response.APIError(req,res,e);
-		}
 	}
+	
 }

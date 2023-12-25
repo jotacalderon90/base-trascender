@@ -10,7 +10,6 @@ module.exports = {
 	
 	//@route('/api/filemanager/folder/full')
 	//@method(['get'])
-	//@roles(['root'])
 	fullDirectory: async function(req,res){
 		try{
 			const getDirectory = function(src, dirbase){

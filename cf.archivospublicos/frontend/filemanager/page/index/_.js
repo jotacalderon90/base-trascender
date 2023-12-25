@@ -1,15 +1,12 @@
-app.modules.filemanager = function(parent) {
+const filemanager = function(parent) {
 	this.parent = parent;
 	this.service_read = createService('GET', ':path:id');
 	this.service_folder_collection = createService("GET", ":path:id/collection");
 	this.service_file_collection = createService("GET", ":path:id/collection");
-	this.service_delete = createService("DELETE", ":path:id");
-	this.service_update = createService("PUT", ":path:id");
 }
 
-app.modules.filemanager.prototype.start = async function() {
-	await this.getUser();
-
+filemanager.prototype.start = async function() {
+	
 	this.createFolder(document.getElementById("ul_directory"), "d0", {
 		name: "/",
 		file: "/api/filemanager/file/",
@@ -20,85 +17,22 @@ app.modules.filemanager.prototype.start = async function() {
 	$('.loader').fadeOut();
 }
 
-app.modules.filemanager.prototype.getUser = async function() {
-	try {
-		this.user = await (createService('GET', '/api/account')());
-	} catch (e) {
-		console.log('Error getUser', e);
-	}
-}
+filemanager.prototype.archive = null,
+filemanager.prototype.textFiles = ["txt", "html", "css", "js", "json", "csv", "md", "gitignore", "bowerrc"],
+filemanager.prototype.mediaFiles = ["jpg", "gif", "png", "ico", "mp3", "mp4", "pdf"],
 
-app.modules.filemanager.prototype.archive = null,
-	app.modules.filemanager.prototype.textFiles = ["txt", "html", "css", "js", "json", "csv", "md", "gitignore", "bowerrc"],
-	app.modules.filemanager.prototype.mediaFiles = ["jpg", "gif", "png", "ico", "mp3", "mp4", "pdf"],
+filemanager.prototype.close = function() {
+	$("#ul_directory .selected").removeClass("selected");
+	this.archive = null;
+};
 
-	app.modules.filemanager.prototype.close = function() {
-		$("#ul_directory .selected").removeClass("selected");
-		this.archive = null;
-	};
-
-app.modules.filemanager.prototype.clean = function() {
+filemanager.prototype.clean = function() {
 	$("#ul_directory .selected").removeClass("selected");
 	this.archive = null;
 	this.parent.refresh();
 };
 
-app.modules.filemanager.prototype.delete = async function() {
-	try {
-		let label = $(this.archive).find("label");
-		if (confirm("Confirme eliminación del archivo")) {
-			let p;
-			let i;
-			if (this.isFile) {
-				p = label.attr("data-api-file");
-				i = btoa(this.fullname);
-			} else if (this.isFolder) {
-				p = label.attr("data-api-folder");
-				i = (btoa(this.fullname.substr(1)));
-			}
-
-			await this.service_delete({
-				id: i,
-				path: p
-			});
-			alert("Archivo eliminado correctamente");
-			$(this.archive.parentNode).find("checkbox").click();
-			location.reload();
-		}
-	} catch (e) {
-		console.log(e);
-		alert(e);
-	}
-};
-
-app.modules.filemanager.prototype.update = async function() {
-	try {
-		let label = $(this.archive).find("label");
-		if (confirm("Confirme actualización del archivo")) {
-			let p;
-			let i;
-			if (this.isFile) {
-				p = label.attr("data-api-file");
-				i = btoa(this.fullname);
-			}
-
-			await this.service_update({
-				id: i,
-				path: p
-			}, JSON.stringify({
-				content: this.fileContent
-			}));
-			alert("Archivo actualizado correctamente");
-			$(this.archive.parentNode).find("checkbox").click();
-			location.reload();
-		}
-	} catch (e) {
-		console.log(e);
-		alert(e);
-	}
-};
-
-app.modules.filemanager.prototype.select = async function(li) {
+filemanager.prototype.select = async function(li) {
 	try {
 		let label = $(li).find("label");
 		label.addClass("selected");
@@ -178,7 +112,7 @@ app.modules.filemanager.prototype.select = async function(li) {
 	this.parent.refresh();
 };
 
-app.modules.filemanager.prototype.createFolder = function(ulParent, id, directory) {
+filemanager.prototype.createFolder = function(ulParent, id, directory) {
 	const li = document.createElement("li");
 	const input = document.createElement("input");
 	input.type = "checkbox";
@@ -251,13 +185,4 @@ app.modules.filemanager.prototype.createFolder = function(ulParent, id, director
 	ulParent.appendChild(li);
 };
 
-app.modules.filemanager.prototype.hasRole = function(role) {
-	return (this.user && this.user.roles && this.user.roles.indexOf(role) > -1) ? true : false;
-}
-
-app.modules.filemanager.prototype.canAdmin = function() {
-	return this.hasRole('root');
-};
-
-
-
+app.modules.filemanager = filemanager;

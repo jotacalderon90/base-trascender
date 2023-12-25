@@ -1,0 +1,48 @@
+<!--use:main-->
+
+<!--define:head-->
+	<link rel="stylesheet" href="filemanager/page/index/_.css" />
+<!--/define:head-->
+
+<!--define:main-->
+
+	<!--include:filemanager/section/nav-->
+	<div class="container-fluid">
+		<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-4">
+					<ul id="ul_directory"></ul>
+				</div>
+				<div class="col-md-8">
+					<div data-ng-show="ctrl.filemanager.archive!=null">
+						<div class="btn-group btn-group-xs btn-group-justified" style="font-size: 10px;">
+							<div class="btn-group" role="group" data-ng-show="ctrl.filemanager.isFile" >
+								<a class="btn btn-default" href="/" data-ng-href="{{ctrl.filemanager.fullnameDOWNLOAD}}" target="_blank" title="Descargar">
+								<i class="fa fa-download"></i> Descargar
+								</a>
+							</div>
+							<div class="btn-group" role="group" data-ng-show="ctrl.filemanager.isFile" >
+								<a class="btn btn-default" href="/" data-ng-href="{{ctrl.filemanager.fullnameGET}}" target="_blank" title="Visualizar">
+								<i class="fa fa-eye"></i> Visualizar
+								</a>
+							</div>
+							<div class="btn-group" role="group">
+								<button class="btn btn-default" data-ng-click="ctrl.filemanager.close()" title="Cerrar">
+								<i class="fa fa-close"></i> Cerrar
+								</button>
+							</div>
+						</div>
+						<br>
+						<div data-ng-show="ctrl.filemanager.isFile">
+							<textarea rows="15" class="form-control" data-ng-show="ctrl.filemanager.isTextFile" data-ng-model="ctrl.filemanager.fileContent"></textarea>
+							<div class="panel-body dv-visualcontent" data-ng-show="ctrl.filemanager.isMediaFile"></div>
+						</div>		
+					</div>
+				</div>
+			</div>			
+		</div>
+	</div>
+
+	<script src="filemanager/page/index/_.js"></script>
+
+<!--/define:main-->

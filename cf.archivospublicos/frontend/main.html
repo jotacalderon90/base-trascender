@@ -5,7 +5,7 @@
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 		
-		<title>FileManager</title>
+		<title><!--define:title--></title>
 		
 		<base href="/" />
 		
@@ -16,8 +16,7 @@
 		<link rel="stylesheet" href="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/font-awesome/css/font-awesome.min.css" />
 		<link rel="stylesheet" href="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/bower_components/jquery-ui/themes/base/jquery-ui.min.css" />
 		<link rel="stylesheet" href="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/trascender/main.css" />
-		
-		<!--define:css-->
+		<!--define:head-->
 		
 	</head>
 	<body>
@@ -29,7 +28,6 @@
 		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/moment.js"></script>
 		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/moment-with-locales.js"></script>
 		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/trascender/global.js"></script>
-		
 		<!--define:script-->
 		
 		<div class="loader">
@@ -37,12 +35,7 @@
 		</div>
 		
 		<div id="app" data-ng-app="myApp" data-ng-controller="myCtrl as ctrl">
-			<!--include:filemanager/nav-->
-			<div class="container-fluid">
-				<div class="col-md-12">
-					<!--define:main-->
-				</div>
-			</div>
+			<!--define:main-->
 		</div>
 		
 		<script src="{{data:process.env.HOST_ARCHIVOSPUBLICOS}}/lib/trascender/controlador.js"></script>
