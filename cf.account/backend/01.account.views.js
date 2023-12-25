@@ -1,7 +1,5 @@
 "use strict";
 
-const googleapis = require('./lib/googleapis');
-
 module.exports = {
 	
 	//@route('/')
@@ -24,7 +22,7 @@ module.exports = {
 	//@route('/login')
 	//@method(['get'])
 	renderLogin: function(req,res){
-		res.render('account/login/_', {google_auth: googleapis.getURL()});
+		res.render('account/login/_');
 	},
 	
 	//@route('/forget')
